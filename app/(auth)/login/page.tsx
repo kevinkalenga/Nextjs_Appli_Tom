@@ -1,10 +1,21 @@
 import ContinueWithGoogleButton from "@/components/continue-with-google-button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // the children in the layout is referecing all the page data for every route
 export default function Login() {
     return (
-        <div>
-           <ContinueWithGoogleButton />
-        </div>
+        
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-3xl font-bold">
+                        Login
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                     <ContinueWithGoogleButton />
+                </CardContent>
+            </Card>
+          
+        
     )
 }
