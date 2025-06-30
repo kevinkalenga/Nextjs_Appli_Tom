@@ -16,7 +16,8 @@ const Breadcrumbs = ({items}: {
          <BreadcrumbList>
             {
               items.map((item, i) => (
-                 <BreadcrumbItem>
+                 <React.Fragment key={i}>
+                           <BreadcrumbItem>
                     {
                       !!item.href && 
                       <Link href={item.href}>{item.label}</Link>
@@ -28,6 +29,11 @@ const Breadcrumbs = ({items}: {
                       </BreadcrumbPage>
                     }
                  </BreadcrumbItem>
+                 {
+                  i < items.length - 1 && <BreadcrumbSeparator />
+                 }
+                </React.Fragment>
+               
               ))
             }
          </BreadcrumbList>
