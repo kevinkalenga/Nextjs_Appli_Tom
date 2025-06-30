@@ -16,7 +16,7 @@ export default function AuthButtons() {
                 !!auth?.currentUser && 
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <Avatar>
+                        <Avatar className="cursor-pointer">
                             {
                                 !!auth.currentUser.photoURL && (
                                     <Image src={auth.currentUser.photoURL}
@@ -37,14 +37,14 @@ export default function AuthButtons() {
                             <div className="font-normal text-xs">{auth.currentUser.email}</div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                         <DropdownMenuItem asChild>
+                         <DropdownMenuItem className="cursor-pointer" asChild>
                             <Link href="/account">
                                My Account
                             </Link>
                          </DropdownMenuItem>
                           {
                             !!auth.customClaims?.admin && (
-                                <DropdownMenuItem asChild>
+                                <DropdownMenuItem className="cursor-pointer" asChild>
                                   <Link href="/admin-dashboard">
                                      Admin Dashboard
                                   </Link>
@@ -53,14 +53,14 @@ export default function AuthButtons() {
                           }
                           {
                             !auth.customClaims?.admin && (
-                                 <DropdownMenuItem asChild>
+                                 <DropdownMenuItem className="cursor-pointer" asChild>
                                    <Link href="/account/my-favourites">
                                       My Favourites
                                    </Link>
                                  </DropdownMenuItem>
                             )
                           }
-                         <DropdownMenuItem onClick={async() => {
+                         <DropdownMenuItem className="cursor-pointer" onClick={async() => {
                             await auth.logout();
                          }}>
                             Logout
