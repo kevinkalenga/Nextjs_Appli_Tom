@@ -4,9 +4,14 @@ import { getProperties } from "@/data/properties";
 
 
 export default async function PropertiesTable() {
-  const response = await getProperties();
-  const data = response.data;
-
+  // const {response, totalPages} = await getProperties();
+   const {data, totalPages} = await getProperties({
+     pagination: {
+       pageSize: 2,
+     }
+   });
+  // const data = response.data;
+console.log({data, totalPages})
   console.log("RAW data:", data, "IsArray:", Array.isArray(data));
 
   if (!Array.isArray(data) || data.length === 0) {
