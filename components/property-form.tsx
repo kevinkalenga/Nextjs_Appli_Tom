@@ -13,12 +13,12 @@ import { Button } from "./ui/button"
 type Props = {
    submitButtonLabel: React.ReactNode;
     handleSubmit: (data: z.infer<typeof propertyDataSchema>) => void;
+    defaultValues?: z.infer<typeof propertyDataSchema>
 }
 
-export default function PropertyForm({handleSubmit, submitButtonLabel}: Props) {
-    const form = useForm<z.infer<typeof propertyDataSchema>>({
-        resolver: zodResolver(propertyDataSchema),
-        defaultValues: {
+export default function PropertyForm({handleSubmit, submitButtonLabel, defaultValues}: Props) {
+   const combineDefaultValues: z.infer<typeof propertyDataSchema> = {
+            ...{
             address1: "",
             address2: "",
             city: "",
@@ -27,8 +27,15 @@ export default function PropertyForm({handleSubmit, submitButtonLabel}: Props) {
             bedrooms: 0,
             bathrooms: 0,
             status: "draft",
-            description: ""
-        }
+            description: "",
+            },
+            ...defaultValues
+        
+     }
+     const form = useForm<z.infer<typeof propertyDataSchema>>({
+        resolver: zodResolver(propertyDataSchema),
+        defaultValues: combineDefaultValues,
+       
     })
     return <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>

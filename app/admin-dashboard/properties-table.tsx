@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getProperties } from "@/data/properties";
+import { PencilIcon } from "lucide-react";
 import Link from "next/link";
 
 
@@ -15,7 +16,6 @@ export default async function PropertiesTable({page = 1}: {page?: number}) {
      }
    });
   // const data = response.data;
-console.log({data, totalPages})
   console.log("RAW data:", data, "IsArray:", Array.isArray(data));
 
   if (!Array.isArray(data) || data.length === 0) {
@@ -52,7 +52,12 @@ console.log({data, totalPages})
               <TableCell>{address}</TableCell>
               <TableCell>{property.price}</TableCell>
               <TableCell>{property.status}</TableCell>
-              <TableCell>View / Edit</TableCell>
+              <TableCell>View/ <Button asChild variant="outline" size="sm">
+                    <Link href={`/admin-dashboard/edit/${property.id}`}>
+                      <PencilIcon />
+                    </Link>
+                </Button>
+              </TableCell>
             </TableRow>
           );
         })}
