@@ -5,6 +5,8 @@ import { auth } from "@/firebase/client"
 import { User } from "firebase/auth"
 import { createContext, useContext, useEffect, useState } from "react"
 import { removeToken, setToken } from "./actions"
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
  type AuthContextType = {
     currentUser: User | null;
@@ -18,6 +20,7 @@ const AuthContext = createContext<AuthContextType | null>(null)
 export const AuthProvider = ({children}:{
     children: React.ReactNode
 }) => {
+     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [customClaims, setCustomClaims] = useState<ParsedToken | null>(null)
     useEffect(() => {
@@ -43,12 +46,15 @@ export const AuthProvider = ({children}:{
     }, [])
 
     const logout = async () => {
-       await auth.signOut();
+        
+         await auth.signOut();
+         router.push("/");
     }
     
     const loginWithGoogle = async () => {
          const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider)
+        
     }
     
     
