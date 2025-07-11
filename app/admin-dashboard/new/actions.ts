@@ -2,21 +2,24 @@
 import {auth, firestore} from "@/firebase/server";
 import { propertyDataSchema } from "@/validation/propertySchema";
 
-export const saveNewProperty = async (data: {
-    address1: string;
-    address2?: string;
-    city: string;
-    postcode: string;
-    description: string;
-    price: number;
-    bedrooms: number;
-    bathrooms: number;
-    status: "for-sale" | "draft" | "withdrawn" | "sold",
-    token: string;
+export const createProperty = async (
+  data: {
+    
+       address1: string;
+       address2?: string;
+       city: string;
+       postcode: string;
+       description: string;
+       price: number;
+       bedrooms: number;
+       bathrooms: number;
+       status: "for-sale" | "draft" | "withdrawn" | "sold",
+   
+    
 
-}) => {
-    const {token, ...propertyData} = data
-   const verifiedToken = await auth.verifyIdToken(token)
+}, authToken: string) => {
+    
+   const verifiedToken = await auth.verifyIdToken(authToken)
 
 
    if(!verifiedToken.admin) {
@@ -26,7 +29,7 @@ export const saveNewProperty = async (data: {
     }
    }
 
-   const validation = propertyDataSchema.safeParse(propertyData)
+   const validation = propertyDataSchema.safeParse(data)
    if(!validation.success) {
       return {
         error: true,
@@ -35,7 +38,7 @@ export const saveNewProperty = async (data: {
    }
 
    const property = await firestore.collection("properties").add({
-     ...propertyData,
+     ...data,
      created: new Date(),
      updated: new Date()
    });
